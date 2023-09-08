@@ -1,5 +1,5 @@
 //
-//  ViewController.swift
+//  LikeViewController.swift
 //  ShoppingApp
 //
 //  Created by walkerhilla on 2023/09/08.
@@ -7,13 +7,13 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+final class LikeViewController: UIViewController {
 
   override func viewDidLoad() {
     super.viewDidLoad()
-    // Do any additional setup after loading the view.
+    
+    view.backgroundColor = .blue
   }
 
 
 }
-
