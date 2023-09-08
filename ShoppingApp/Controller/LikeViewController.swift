@@ -7,13 +7,11 @@
 
 import UIKit
 
-final class LikeViewController: UIViewController {
+final class LikeViewController: BaseViewController {
 
   override func viewDidLoad() {
     super.viewDidLoad()
     
-    view.backgroundColor = .blue
   }
-
 
 }

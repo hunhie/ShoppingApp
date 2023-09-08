@@ -16,7 +16,7 @@ final class MainTapBarController: UITabBarController {
   }
   
   func setupTabBar() {
-
+    
     tabBar.isTranslucent = false
     tabBar.tintColor = .white
     
@@ -25,12 +25,12 @@ final class MainTapBarController: UITabBarController {
     setViewControllers([shopping, like], animated: true)
     
     if let items = tabBar.items {
-      items[0].image = UIImage(systemName: "magnifyingglass")
-      items[0].title = "검색"
+      items[0].image = UIImage(systemName: Strings.Search.tabBarItemImageName.rawValue)
+      items[0].title = Strings.Search.tabBarItemTitle.rawValue
       
-      items[1].selectedImage = UIImage(systemName: "heart.fill")
-      items[1].image = UIImage(systemName: "heart")
-      items[1].title = "좋아요"
+      items[1].selectedImage = UIImage(systemName: Strings.Like.tabBarItemSelectedImageName.rawValue)
+      items[1].image = UIImage(systemName: Strings.Like.tabBarItemImageName.rawValue)
+      items[1].title = Strings.Like.tabBarItemTitle.rawValue
     }
   }
 }
