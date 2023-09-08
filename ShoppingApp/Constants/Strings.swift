@@ -20,4 +20,11 @@ enum Strings {
       case priceHighToLow = "가격낮은순"
     }
   }
+  
+  enum Like: String {
+    case navigationtitle = "좋아요 목록"
+    case tabBarItemTitle = "좋아요"
+    case tabBarItemImageName = "heart"
+    case tabBarItemSelectedImageName = "heart.fill"
+  }
 }
