@@ -2,7 +2,7 @@
 //  Strings.swift
 //  ShoppingApp
 //
-//  Created by walkerhilla on 2023/09/08.
+//  Created by walkerhilla on 2023/09/09.
 //
 
 import Foundation
@@ -25,6 +25,5 @@ enum Strings {
     case navigationtitle = "좋아요 목록"
     case tabBarItemTitle = "좋아요"
     case tabBarItemImageName = "heart"
-    case tabBarItemSelectedImageName = "heart.fill"
   }
 }
