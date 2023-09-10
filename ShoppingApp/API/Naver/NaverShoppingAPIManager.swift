@@ -23,7 +23,7 @@ final class NaverShoppingAPIManager {
   
   static let baseURL = "https://openapi.naver.com/v1/search/shop.json?query="
   
-  func callRequest(query: String, completion: @escaping (NaverShopData?) -> ()) {
+  func callRequest(query: String, completion: @escaping (NaverShopList?) -> ()) {
     let text = query.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!
     let url = NaverShoppingAPIManager.baseURL + text
     let headers: HTTPHeaders = [
@@ -31,7 +31,7 @@ final class NaverShoppingAPIManager {
       "X-Naver-Client-Secret": APIKey.Naver.clientSecret
     ]
     
-    AF.request(url, method: .get, headers: headers).validate(statusCode: 200...500).responseDecodable(of: NaverShopData.self) { response in
+    AF.request(url, method: .get, headers: headers).validate(statusCode: 200...500).responseDecodable(of: NaverShopList.self) { response in
       switch response.result {
       case .success(let value):
         completion(value)
