@@ -16,9 +16,8 @@ final class MainTapBarController: UITabBarController {
   }
   
   func setupTabBar() {
-    
-    tabBar.isTranslucent = false
-    tabBar.tintColor = .white
+    tabBar.backgroundColor = .systemBackground
+    tabBar.isTranslucent = true
     
     let shopping = UINavigationController(rootViewController: SearchViewController())
     let like = UINavigationController(rootViewController: LikeViewController())
@@ -28,7 +27,6 @@ final class MainTapBarController: UITabBarController {
       items[0].image = UIImage(systemName: Strings.Search.tabBarItemImageName.rawValue)
       items[0].title = Strings.Search.tabBarItemTitle.rawValue
       
-      items[1].selectedImage = UIImage(systemName: Strings.Like.tabBarItemSelectedImageName.rawValue)
       items[1].image = UIImage(systemName: Strings.Like.tabBarItemImageName.rawValue)
       items[1].title = Strings.Like.tabBarItemTitle.rawValue
     }
