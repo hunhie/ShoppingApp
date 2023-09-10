@@ -7,15 +7,15 @@
 
 import Foundation
 
-// MARK: - NaverShopData
-struct NaverShopData: Codable {
+// MARK: - NaverShopList
+struct NaverShopList: Codable {
   let lastBuildDate: String
   let total, start, display: Int
-  let items: [Item]
+  let items: [NaverShopItem]
 }
 
-// MARK: - Item
-struct Item: Codable {
+// MARK: - NaverShopItem
+struct NaverShopItem: Codable {
   let title: String
   let link: String
   let image: String
@@ -25,6 +25,10 @@ struct Item: Codable {
   let category2: String
   let category3: String
   let category4: String
+  
+  var price: Int? {
+    Int(lprice)
+  }
   
   enum CodingKeys: String, CodingKey {
     case title, link, image, lprice, hprice, mallName
