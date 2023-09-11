@@ -20,4 +20,13 @@ extension UIViewController {
     
     return lastParent?.view.window?.windowScene?.screen
   }
+  
+  func addTapGestureForEndEditing() {
+//    let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(didTapScreen))
+//    view.addGestureRecognizer(tapGestureRecognizer)
+  }
+  
+  @objc func didTapScreen() {
+    view.endEditing(true)
+  }
 }

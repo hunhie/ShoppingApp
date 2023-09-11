@@ -13,11 +13,11 @@ enum Strings {
     case tabBarItemTitle = "검색"
     case tabBarItemImageName = "magnifyingglass"
     
-    enum filterButton: String {
-      case accuracy = "정확도"
-      case recent = "날짜순"
-      case priceLowToHigh = "가격높은순"
-      case priceHighToLow = "가격낮은순"
+    enum filterButton: String, CaseIterable {
+      case sim = "정확도"
+      case date = "날짜순"
+      case dsc = "가격높은순"
+      case asc = "가격낮은순"
     }
   }
   

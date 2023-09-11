@@ -1,0 +1,4 @@
+*.plist
+*.xcconfig
+.DS_Store
+APIKey.swift

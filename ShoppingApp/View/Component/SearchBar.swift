@@ -24,9 +24,6 @@ final class SearchBar: UISearchBar {
     searchBarStyle = .minimal
     setValue("취소", forKey: "cancelButtonText")
     tintColor = .black
-  }
-  
-  func setPlaceholder(text: String) {
-    placeholder = text
+    placeholder = "검색어를 입력해주세요."
   }
 }

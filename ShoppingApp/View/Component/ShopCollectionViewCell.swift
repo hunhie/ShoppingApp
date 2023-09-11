@@ -44,7 +44,24 @@ final class ShopCollectionViewCell: BaseCollectionViewCell {
     return view
   }()
   
-  var data: NaverShopItem?
+  lazy var likeButton: UIButton = {
+    let view = UIButton()
+    view.backgroundColor = .white
+    view.layer.cornerRadius = 16
+    view.clipsToBounds = true
+    view.tintColor = .black
+    view.layer.shadowColor = UIColor.black.cgColor
+    view.layer.masksToBounds = false
+    view.layer.shadowOffset = CGSize(width: 0, height: 1)
+    view.layer.shadowRadius = 1
+    view.layer.shadowOpacity = 0.2
+    return view
+  }()
+  
+  var item: NaverShopItem?
+  var indexPath: IndexPath?
+  let repository: LikeTableRepository = LikeTableRepository()
+  weak var delegate: LikeButtonDelegate?
   
   override init(frame: CGRect) {
     super.init(frame: frame)
@@ -54,13 +71,20 @@ final class ShopCollectionViewCell: BaseCollectionViewCell {
     fatalError("init(coder:) has not been implemented")
   }
   
+  override func prepareForReuse() {
+    super.prepareForReuse()
+    
+    self.likeButton.setImage(UIImage(systemName: "heart"), for: .normal)
+  }
+  
   override func configureView() {
     super.configureView()
-
+    
     setupThumbImageView()
     setupMallNameLabel()
     setupTitleLabel()
     setupPriceLabel()
+    setupLikeButton()
   }
   
   override func setConstraints() {
@@ -86,29 +110,74 @@ final class ShopCollectionViewCell: BaseCollectionViewCell {
       make.horizontalEdges.equalTo(contentView).inset(5)
       make.bottom.lessThanOrEqualTo(5)
     }
+    
+    likeButton.snp.makeConstraints { make in
+      make.bottom.trailing.equalTo(thumbImageView).inset(6)
+      make.size.equalTo(32)
+    }
   }
   
   func setupThumbImageView() {
     contentView.addSubview(thumbImageView)
-    if let data {
-      thumbImageView.kf.setImage(with: URL(string: data.image))
+    if let item {
+      thumbImageView.kf.setImage(with: URL(string: item.image))
     }
   }
   
   func setupMallNameLabel() {
     contentView.addSubview(mallNameLabel)
-    if let data {
-      mallNameLabel.text = "[\(data.mallName)]"
+    if let item {
+      mallNameLabel.text = "[\(item.mallName)]"
     }
   }
   
   func setupTitleLabel() {
     contentView.addSubview(titleLabel)
-    titleLabel.text = data?.title.htmlEscaped
+    titleLabel.text = item?.title.htmlEscaped
   }
   
   func setupPriceLabel() {
     contentView.addSubview(priceLabel)
-    priceLabel.text = data?.price?.numberformat
+    priceLabel.text = item?.price?.numberformat?.won
+  }
+  
+  func setupLikeButton() {
+    contentView.addSubview(likeButton)
+    let image = UIImage(systemName: "heart")
+    likeButton.setImage(image, for: .normal)
+    likeButton.addTarget(self, action: #selector(likeButtonTapped), for: .touchUpInside)
+    if let indexPath {
+      likeButton.tag = indexPath.item
+    }
+    likeButtonImageToggle { [weak self] data in
+      guard let self else { return }
+      let filterdData = self.repository.fetchFilter(productID: data.productID)
+      if filterdData.isEmpty {
+        self.likeButton.setImage(UIImage(systemName: "heart"), for: .normal)
+      } else {
+        self.likeButton.setImage(UIImage(systemName: "heart.fill"), for: .normal)
+      }
+    }
+  }
+  
+  func likeButtonImageToggle(completion: @escaping (LikeTable) -> ()) {
+    guard let item else { return }
+    let data = LikeTable.fromNaverShopItem(item)
+    completion(data)
+  }
+  
+  @objc func likeButtonTapped() {
+    likeButtonImageToggle { [weak self] data in
+      guard let self else { return }
+      let filterdData = self.repository.fetchFilter(productID: data.productID)
+      if filterdData.isEmpty {
+        self.repository.create(item: data)
+        self.likeButton.setImage(UIImage(systemName: "heart.fill"), for: .normal)
+      } else {
+        self.repository.delete(item: filterdData)
+        self.likeButton.setImage(UIImage(systemName: "heart"), for: .normal)
+      }
+    }
+    delegate?.didTapped()
   }
 }

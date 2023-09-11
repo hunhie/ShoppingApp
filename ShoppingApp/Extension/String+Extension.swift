@@ -28,4 +28,8 @@ extension String {
       return self
     }
   }
+  
+  var won: String {
+    "\(self)원"
+  }
 }

@@ -21,11 +21,11 @@ final class NaverShoppingAPIManager {
   static let shared = NaverShoppingAPIManager()
   private init() { }
   
-  static let baseURL = "https://openapi.naver.com/v1/search/shop.json?query="
+  static let baseURL = "https://openapi.naver.com/v1/search/shop.json"
   
-  func callRequest(query: String, completion: @escaping (NaverShopList?) -> ()) {
+  func callRequest(query: String, start:Int, display: Int = 10, sort: SortType, completion: @escaping (NaverShopList?) -> ()) {
     let text = query.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!
-    let url = NaverShoppingAPIManager.baseURL + text
+    let url = "\(NaverShoppingAPIManager.baseURL)?query=\(text)&start=\(start)&display=\(display)&sort=\(sort.stringValue)"
     let headers: HTTPHeaders = [
       "X-Naver-Client-Id": APIKey.Naver.clientID,
       "X-Naver-Client-Secret": APIKey.Naver.clientSecret
@@ -39,6 +39,14 @@ final class NaverShoppingAPIManager {
         print(error)
         completion(nil)
       }
+    }
+  }
+  
+  enum SortType: Int, CaseIterable {
+    case sim, date, dsc, asc
+    
+    var stringValue: String {
+      String(describing: self)
     }
   }
 }
