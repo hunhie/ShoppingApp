@@ -486,6 +486,7 @@
 				DEVELOPMENT_TEAM = HL89CPH3NA;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = ShoppingApp/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "이훈희";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
@@ -517,6 +518,7 @@
 				DEVELOPMENT_TEAM = HL89CPH3NA;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = ShoppingApp/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "이훈희";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
