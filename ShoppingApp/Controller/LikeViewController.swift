@@ -48,7 +48,6 @@ final class LikeViewController: BaseViewController {
   override func configureView() {
     super.configureView()
     
-    addTapGestureForEndEditing()
     setSearchBar()
     setTitle()
     setCollectionView()
@@ -130,6 +129,7 @@ extension LikeViewController: UISearchBarDelegate {
       }
       self.mainView.collectionView.collectionView.reloadData()
     }
+    view.endEditing(true)
   }
 }
 
