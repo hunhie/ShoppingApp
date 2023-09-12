@@ -26,12 +26,12 @@ final class SearchViewController: BaseViewController {
   var displayCount: Int = 10
   var selectedFilterType: NaverShoppingAPIManager.SortType = .sim
   let repository = LikeTableRepository()
+  var query: String?
+  
   //MARK: - ViewController Lifecycle
 
   override func viewDidLoad() {
     super.viewDidLoad()
-    
-    print(repository.realm.configuration.fileURL)
   }
   
   override func viewWillAppear(_ animated: Bool) {
@@ -46,8 +46,7 @@ final class SearchViewController: BaseViewController {
   
   override func configureView() {
     super.configureView()
-    
-    addTapGestureForEndEditing()
+
     setSearchBar()
     setFilterDelegate()
     setTitle()
@@ -88,15 +87,11 @@ final class SearchViewController: BaseViewController {
   private func setCollectionViewCell() {
     mainView.collectionView.collectionView.register(ShopCollectionViewCell.self, forCellWithReuseIdentifier: ShopCollectionViewCell.identifier)
   }
-  
-  private func setNoResultsLabel() {
-    
-  }
-  
+
   //MARK: - Network
   
   private func fetchData(completion: @escaping (NaverShopList) -> ()) {
-    guard let query = mainView.searchBar.searchTextField.text else { return }
+    guard let query = query else { return }
     NaverShoppingAPIManager.shared.callRequest(query: query, start: startItem, display: displayCount, sort: self.selectedFilterType) { response in
       guard let response else { return }
       completion(response)
@@ -117,6 +112,7 @@ extension SearchViewController: UISearchBarDelegate {
   }
   
   func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+    query = searchBar.text
     fetchData { [weak self] data in
       guard let self else { return }
       if data.items.isEmpty {
@@ -131,6 +127,7 @@ extension SearchViewController: UISearchBarDelegate {
       }
       self.mainView.collectionView.collectionView.reloadData()
     }
+    view.endEditing(true)
   }
 }
 
@@ -180,6 +177,7 @@ extension SearchViewController: ShopItemFilterProtocol {
     selectedFilterType = filterType
     startItem = 1
     fetchData { data in
+      self.mainView.collectionView.scrollToTop(animated: true)
       self.naverShopData = data.items
       self.mainView.collectionView.collectionView.reloadData()
     }
