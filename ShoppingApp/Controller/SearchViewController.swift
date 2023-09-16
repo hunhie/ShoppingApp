@@ -91,7 +91,8 @@ final class SearchViewController: BaseViewController {
   //MARK: - Network
   
   private func fetchData(completion: @escaping (NaverShopList) -> ()) {
-    guard let query = query else { return }
+    guard let query = query,
+          !query.isEmpty else { return }
     NaverShoppingAPIManager.shared.callRequest(query: query, start: startItem, display: displayCount, sort: self.selectedFilterType) { response in
       guard let response else { return }
       completion(response)

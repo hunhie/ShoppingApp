@@ -92,7 +92,8 @@ final class LikeViewController: BaseViewController {
   }
   
   private func fetchFilteredData(completion: @escaping (Results<LikeTable>?) -> ()) {
-    guard let query = self.mainView.searchBar.text else { return completion(nil) }
+    guard let query = self.mainView.searchBar.text,
+          !query.isEmpty else { return completion(nil) }
     let data = repository.fetchFilter(query: query)
     completion(data)
   }
