@@ -7,6 +7,12 @@
 - 네이버 쇼핑 상품 데이터를 제공하고 즐겨찾기 기능을 제공하는 iOS 앱 서비스
 
 ### 앱 미리보기
+<p align="center" witdh="100%">
+<img src="https://i.imgur.com/6HMqGiH.jpg" width="24%">
+<img src="https://i.imgur.com/0k8KPbC.jpg" width="24%">
+<img src="https://i.imgur.com/OmIqCSt.jpg" width="24%">
+<img src="https://i.imgur.com/vj5Nux6.jpg" width="24%">
+</p>
 
 ### 개발 환경
 - Deployment Target: 13.0
