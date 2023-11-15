@@ -27,6 +27,12 @@
 - 상품 상세 정보 제공(웹뷰)
 
 ### 주요 성과
+- UI 재사용:   
+반복적으로 사용되는 Cell을 컴포넌트화 하여 재사용성 향상함
+- WebView 활용한 외부 컨텐츠 제공:   
+상품 상세 정보를 웹뷰로 신속하게 제공하여 사용자 경험 향상
+- Codable을 활용한 API 통신:   
+네트워크 응답을 Codable 데이터 모델로 수신하여 생산성 향상
 - `Repository Pattern` 도입:   
 데이터 관리 로직을 추상화하고 DB 데이터 액세스의 단일 진입점을 제공하여 로직의 유지보수성과 확장성을 향상함
 - 재사용되는 뷰 컴포넌트화:
@@ -43,4 +49,21 @@
     
     self.likeButton.setImage(UIImage(systemName: "heart"), for: .normal)
   }
+```
+#### 2. 검색 필터 옵션 변경 시 스크롤이 유지되는 문제
+**문제 상황**: 사용자가 검색 중 필터 옵션을 변경하는 경우 컬렉션 뷰의 스크롤이 초기화되지 않고 유지되는 문제가 발생하였음
+**원인 분석**: 필터 옵션 변경 시 CollectionView의 데이터만 reload하기 때문에 contentOffset은 그대로 유지됨
+**해결**: reloadData 시점 이 전에 collectionView의 contentOffset을 최상단으로 초기화하는 메서드를 실행하여 해결함.
+```Swift
+  extension SearchViewController: ShopItemFilterProtocol {
+  func didFiltered(filterType: NaverShoppingAPIManager.SortType) {
+    selectedFilterType = filterType
+    startItem = 1
+    fetchData { data in
+      self.mainView.collectionView.scrollToTop(animated: true)
+      self.naverShopData = data.items
+      self.mainView.collectionView.collectionView.reloadData()
+    }
+  }
+}
 ```
